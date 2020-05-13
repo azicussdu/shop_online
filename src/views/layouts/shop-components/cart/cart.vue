@@ -53,16 +53,16 @@
                           <v-container>
                             <v-row>
                               <v-col cols="12" sm="9">
-                                <v-text-field label="Address*" type="text" required></v-text-field>
+                                <v-text-field label="Address*" type="text" required v-model="order.address"></v-text-field>
                               </v-col>
                               <v-col cols="12" sm="3">
-                                <v-text-field label="Zip code*" type="text" required></v-text-field>
+                                <v-text-field label="Zip code*" type="text" required v-model="order.zip_code"></v-text-field>
                               </v-col>
                               <v-col cols="12">
-                                <v-text-field label="Full name*" type="text" required></v-text-field>
+                                <v-text-field label="Full name*" type="text" required v-model="order.full_name"></v-text-field>
                               </v-col>
                               <v-col cols="12">
-                                <v-text-field label="Phone number*" type="text" required></v-text-field>
+                                <v-text-field label="Phone number*" type="text" required v-model="order.telephone_number"></v-text-field>
                               </v-col>
                               <v-col cols="12">
                                 <v-select
@@ -70,6 +70,7 @@
                                   item-value="id"
                                   item-text="name"
                                   label="City*"
+                                  v-model="order.city_id"
                                   required
                                 ></v-select>
                               </v-col>
@@ -80,7 +81,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="dialog = false">Отменить</v-btn>
-                          <v-btn color="blue darken-1" text @click="dialog = false">Отправить</v-btn>
+                          <v-btn color="blue darken-1" text @click="orderProducts">Отправить</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
@@ -103,6 +104,14 @@ export default {
   name: 'cart',
   data: function () {
     return {
+      order: {
+        city_id: '',
+        zip_code: '',
+        address: '',
+        full_name: '',
+        telephone_number: '',
+        product: []
+      },
       dialog: false,
       cities: [
         {
@@ -141,9 +150,23 @@ export default {
       ]
     }
   },
+  methods: {
+    orderProducts () {
+      this.dialog = false
+      for (let i = 0; i < this.CART.length; i++) {
+        let p = {
+          id: this.CART[i].id,
+          pieces: this.CART[i].quantity
+        }
+        this.order.product.push(p)
+      }
+      this.ORDER(this.order)
+    }
+  },
   computed: {
     ...mapGetters([
-      'CART'
+      'CART',
+      'ORDER'
     ]),
     cartTotal () {
       if (this.CART.length) {
