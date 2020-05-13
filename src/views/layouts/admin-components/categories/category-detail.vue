@@ -50,7 +50,7 @@
                     <td>{{subcategory.alias}}</td>
                     <td class="text-center">
                       <a>
-                        <font-awesome-icon icon="trash-alt" class = "red pointer"/>
+                        <font-awesome-icon :icon="['far','trash-alt']" class = "red pointer"/>
                       </a>
                     </td>
                   </tr>

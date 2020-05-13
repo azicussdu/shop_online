@@ -35,7 +35,7 @@
                     </router-link>
                     /
                     <a @click = "deleteBrand(brand.id)">
-                      <font-awesome-icon icon="trash-alt" class = "red-icon-color pointer"/>
+                      <font-awesome-icon :icon="['far','trash-alt']" class = "red-icon-color pointer"/>
                     </a>
                   </td>
                 </tr>

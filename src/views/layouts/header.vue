@@ -12,7 +12,7 @@
             <div class="header-search">
               <input type="search" class = "header-search-input" placeholder="Поиск...">
               <div class="search-btn">
-                <button><font-awesome-icon icon = "search"></font-awesome-icon></button>
+                <button><font-awesome-icon icon="search"></font-awesome-icon></button>
               </div>
             </div>
           </div>
@@ -26,10 +26,10 @@
 <!--                    <font-awesome-icon icon = "user"></font-awesome-icon>-->
 <!--                  </div>-->
 <!--                </router-link>-->
-                <div class="profile pr-4" @click = "toggleProfileMenu" data-toggle = "dropdownProfile">
-                  <font-awesome-icon icon = "user" class = "mr-2" style = "font-size:1.3em;"></font-awesome-icon>
+                <div class="profile pr-4" @click = "toggle" data-toggle = "dropdownProfile">
+                  <font-awesome-icon icon="user" class = "mr-2" style = "font-size:1.3em;"></font-awesome-icon>
                   <span class="myProfile">Мой аккаунт</span>
-                  <font-awesome-icon icon = "chevron-down" class = "ml-1" style = "font-size:.7em;"></font-awesome-icon>
+                  <font-awesome-icon icon="chevron-down" class = "ml-1" style = "font-size:.7em;"></font-awesome-icon>
                   <div class="dropdown-profile">
                     <ul class = "dropdown-profile-menu" id= "dropdownProfile">
                       <div v-if="!isAuthenticated">
@@ -59,12 +59,65 @@
                     </ul>
                   </div>
                 </div>
-                <router-link tag = "div" class="basket" :to = "{name:'cart'}" >
-                  <font-awesome-icon icon = "shopping-cart"></font-awesome-icon>
-                  <div class="cart-product-count">
-                    <span>{{CART.length}}</span>
+                <div class="basket">
+                  <div class="basket__inner" @click = "toggle" data-toggle = "basketDropdown">
+                    <font-awesome-icon icon = "shopping-cart"></font-awesome-icon>
+                    <div class="cart-product-count">
+                      <span>{{CART.length}}</span>
+                    </div>
                   </div>
-                </router-link>
+                  <div class="basket-dropdown" id = "basketDropdown">
+                    <div class="basket-dropdown__header">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6 py-0">
+                            <div class="basket-dropdown__title text-left">Корзина</div>
+                          </div>
+                          <div class="col-6 py-0">
+                            <div class="basket-dropdown__close text-right">
+                              <span @click = "hideCart" ><font-awesome-icon icon = "times" class = "basket-dropdown__close-icon" /></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="basket-dropdown__content" v-if = "CART.length">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-12 py-0">
+                            <div class="basket-dropdown__item" v-for="(item, index) in CART" :key="index">
+                              <div class="basket-dropdown__item-inner">
+                                <div class="basket-dropdown__img">
+                                  <img :src="item.image" alt="">
+                                </div>
+                                <p class="basket-dropdown__text">
+                                  {{item.alias}}
+                                </p>
+                                <p class="basket-dropdown__price">{{item.price}}</p>
+                              </div>
+                              <div class="basket-tools">
+                                <div class="basket-tools__actions">
+                                  <span><font-awesome-icon class = "basket-tools__icon-1" :icon = "['far','eye']"></font-awesome-icon></span>
+                                  <span @click="DELETE_ITEM_FROM_CART(item.id)"><font-awesome-icon class = "basket-tools__icon-2" :icon = "['far','trash-alt']"/></span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else class = "basket-dropdown__empty">У вас нет товаров в корзине</div>
+                    <div class="basket-dropdown__footer">
+                      <div class="basket-dropdown__total">
+                        <span>{{CART.length}} товара на сумму</span>
+                        <span>{{cartTotal}}</span>
+                      </div>
+                      <div class="basket-dropdown__btn">
+                        <span  @click = "hideCart"><router-link tag = "button" :to = "{name:'cart'}" class = "btn btn-success w-100">Перейти в корзину</router-link></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
           </div>
         </div>
@@ -76,15 +129,19 @@
           <div class="col-12 p-0">
             <nav>
               <ul class="header-nav">
-                <li class = "nav-item active">
-                  <router-link :to="{name: 'main'}" tag = "a">
-                    Главная страница
-                  </router-link></li>
                 <li class = "nav-item">
-                  <router-link :to="`/`" tag = "a">
-                     Магазин
-                  </router-link></li>
-                <li class = "nav-item"><a href="#">О нас</a></li>
+                  <router-link :to="{name: 'main'}" tag = "a" exact>
+                    Главная страница
+                  </router-link>
+                </li>
+                <li class = "nav-item">
+                  <router-link :to="{name:'payment'}" tag = "a">
+                     Оплата и доставка
+                  </router-link>
+                </li>
+                <li class = "nav-item">
+                  <router-link :to="{name:'about'}" tag = "a">О нас</router-link>
+                </li>
                 <li class = "nav-item"><router-link :to = "{name:'contact'}" tag="a">Контакты</router-link></li>
                 <li class = "nav-item" v-if="(user_role === 'admin') && isAuthenticated">
                   <a href="#">
@@ -131,18 +188,41 @@ export default {
   },
   methods: {
     ...mapActions([
-      'LOG_OUT'
+      'LOG_OUT',
+      'DELETE_ITEM_FROM_CART'
     ]),
-    toggleProfileMenu (e) {
+    changeCount (e) {
+    },
+    toggle (e) {
       let dropdownId = e.currentTarget.dataset.toggle
       let dropdown = document.getElementById(dropdownId)
+      if (dropdown.classList.contains('hide')) dropdown.classList.remove('hide')
       if (dropdown) dropdown.classList.toggle('show')
+    },
+    hideCart (e) {
+      let hideElement = document.querySelector('#basketDropdown')
+      if (!hideElement.classList.contains('hide')) hideElement.classList.add('hide')
+      if (hideElement.classList.contains('show')) hideElement.classList.remove('show')
     }
   },
   computed: {
     ...mapGetters([
       'CART', 'isAuthenticated'
-    ])
+    ]),
+    cartTotal () {
+      if (this.CART.length) {
+        let total = []
+        for (let item of this.CART) {
+          total.push(item.price * item.quantity)
+        }
+        total = total.reduce(function (sum, el) {
+          return sum + el
+        })
+        return total
+      } else {
+        return 0
+      }
+    }
   }
 }
 </script>
@@ -170,6 +250,10 @@ export default {
       border-radius: .5em;
       padding: .4em 1.5em;
       font-size: .8em;
+      border:1px solid transparent;
+      &:focus{
+        border:1px solid rgba(0,0,139,.5);
+      }
     }
     .search-btn {
       position: absolute;
@@ -238,27 +322,6 @@ export default {
          display: block;
        }
      }
-     .basket{
-       box-sizing: border-box;
-       border-radius: 1.5em;
-       padding: .8em;
-       border:1px solid rgba(0,0,0,.3);
-       cursor:pointer;
-       width: 48px;
-       height: 48px;
-       background-color:#fff;
-       margin-left: .2em;
-       position: relative;
-       &:hover{
-         background-color:$blue;
-         border: 1px solid #fff;
-         color:#fff;
-         transition: .3s all ease-in;
-         span{
-           color:#000;
-         }
-       }
-     }
      .cart-product-count{
        position: absolute;
        top:-5px;
@@ -275,27 +338,175 @@ export default {
    }
    .header-nav-wrapper{
      box-shadow: 0 0 7px 0 #ccc;
-     margin-bottom: 1.5em;
      .header-nav{
        display: flex;
        list-style: none;
        text-align: center;
        margin-bottom:0;
        .nav-item{
-         padding: .5em 0;
          flex:1;
          height: 40px;
+       }
+       a{
+         display: block;
+         padding: .5em 0;
+         color:rgba(0,0,0,.8);
+         text-decoration: none;
          &:hover{
            border-bottom: 2px solid #f5c002;
            min-height: 38px;
            background-color: #f6f8fd;
          }
        }
-       a{
-         display: block;
-         color:rgba(0,0,0,.8);
-         text-decoration: none;
+       a.active{
+         border-bottom: 2px solid #f5c002;
        }
      }
    }
+   .basket{
+     position: relative;
+   }
+   .basket__inner{
+     padding: .8em;
+     box-sizing: border-box;
+     border-radius: 1.5em;
+     border:1px solid rgba(0,0,0,.3);
+     cursor:pointer;
+     width: 48px;
+     height: 48px;
+     background-color:#fff;
+     margin-left: .2em;
+     transition: .5s background-color linear;
+   }
+   .basket__inner:hover{
+     border:1px solid #fff;
+     background-color: $blue;
+   }
+   .basket__inner:hover .basket{
+     background-color: $blue;
+     border:1px solid rgba(0,0,0,.1);
+
+   }
+  .basket-dropdown{
+    position: absolute;
+    left:-130px;
+    width: 320px;
+    height:auto;
+    background-color: #fff;
+    border:1px solid rgba(0,0,0,.1);
+    border-radius: 3px;
+    transition: .5s all linear;
+    top:-1000px;
+    z-index: 1;
+  }
+  .basket-dropdown::after{
+    content:'';
+    position: absolute;
+    bottom: 100%;
+    left:50%;
+    transform: translateX(-50%);
+    border-width: 9px;
+    border-style: solid;
+    border-color:transparent transparent white transparent;
+  }
+  .basket-dropdown.show{
+    top:60px;
+  }
+   .basket-dropdown.hide{
+     top:-1000px;
+   }
+  .basket-dropdown__header{
+    border-bottom: 1px solid rgba(0,0,0,.1);
+  }
+  .basket-dropdown__title{
+    font-size: 13px;
+    font-weight: 600;
+    color:rgba(0,0,0,.6)
+  }
+  .basket-dropdown__close-icon{
+    font-weight:200;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .basket-dropdown__content{
+    max-height: 290px;
+    overflow-y: scroll;
+  }
+  .basket-dropdown__item{
+    box-sizing: border-box;
+    padding: 10px 0 5px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+  }
+  .basket-dropdown__item-inner{
+    display: flex;
+  }
+  .basket-dropdown__img{
+    width: 20%;
+  }
+  .basket-dropdown__img img{
+    max-width: 60px;
+    height: auto;
+  }
+  .basket-dropdown__text{
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2;
+    overflow: hidden;
+    padding:0 12px 0 18px;
+    box-sizing: border-box;
+    width: 50%;
+  }
+  .basket-dropdown__price{
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: 30%;
+    padding:0 12px;
+  }
+  .basket-dropdown__empty{
+    padding: 12px;
+    font-size: 11px;
+    background-color: #f4f4f4;
+  }
+  .basket-tools{
+    display: flex;
+    padding: 5px 0;
+  }
+  .basket-tools__count{
+    width:50%;
+    padding: 0 25px;
+  }
+  .basket-tools__count input {
+    width: 40px;
+  }
+  .basket-tools__actions{
+    width: 50%;
+    text-align: right;
+    padding:0 25px;
+  }
+  .basket-tools__icon-1{
+    margin-right: 5px;
+    color:darkblue;
+    cursor: pointer;
+  }
+  .basket-tools__icon-2{
+    color:orangered;
+    cursor: pointer;
+  }
+  .basket-dropdown__total{
+    display: flex;
+    padding: 10px 30px 12px 12px;
+    font-size: 12px;
+  }
+  .basket-dropdown__total span{
+    display:block;
+    width: 50%;
+  }
+  .basket-dropdown__total span:last-child{
+    font-weight: 700;
+    text-align: right;
+  }
+  .basket-dropdown__btn{
+    padding:7px 12px 12px;
+  }
 </style>

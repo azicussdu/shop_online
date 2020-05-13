@@ -31,11 +31,11 @@
                 <td class="text-center">{{order.updated_at | convert}}</td>
                 <td class="text-center">
                   <router-link  :to="`/admin/orders/detail/${order.id}`">
-                    <font-awesome-icon icon="eye" class = "blue pointer"/>
+                    <font-awesome-icon :icon="['far','eye']" class = "blue pointer"/>
                   </router-link>
                   /
                   <a @click = "DELETE_ORDER(order.id)">
-                    <font-awesome-icon icon="trash-alt" class = "red-icon-color pointer"/>
+                    <font-awesome-icon :icon="['far','trash-alt']" class = "red-icon-color pointer"/>
                   </a>
                 </td>
               </tr>

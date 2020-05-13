@@ -40,7 +40,7 @@
           </b-form-group>
           <div class="row">
             <div v-for="(product_category, index) in PRODUCT_CATEGORIES" :key="index" class="category_item">
-              <b-badge variant="primary"><span> {{product_category.name}} </span><font-awesome-icon icon="times" class = "icon-red pointer" @click="DELETE_PRODUCT_CATEGORY(product_category.id)"/></b-badge>
+              <b-badge variant="primary"><span> {{product_category.name}} </span><font-awesome-icon :icon="['far','times']" class = "icon-red pointer" @click="DELETE_PRODUCT_CATEGORY(product_category.id)"/></b-badge>
             </div>
           </div>
           <b-form-group label="Filters">
@@ -51,7 +51,7 @@
             </b-form-select>
             <div class="row">
               <div v-for="(product_filter, index) in PRODUCT_FILTERS" :key="index" class="category_item">
-                <b-badge variant="primary"><span> {{product_filter.value}}  </span><font-awesome-icon icon="times" class = "icon-red pointer" @click="DELETE_PRODUCT_FILTER(product_filter.id)"/></b-badge>
+                <b-badge variant="primary"><span> {{product_filter.value}}  </span><font-awesome-icon :icon="['far','times']" class = "icon-red pointer" @click="DELETE_PRODUCT_FILTER(product_filter.id)"/></b-badge>
               </div>
             </div>
           </b-form-group>
@@ -87,10 +87,10 @@
                 </div>
                 <p style="text-align: center">
                   <a href="javascript:void(0)" style="text-decoration: none;" data-name="single" @click.prevent="$refs.fileUploadImage.click()">
-                    <font-awesome-icon icon="edit" class="blue pointer"/> Загрузить
+                    <font-awesome-icon :icon="['far','edit']" class="blue pointer"/> Загрузить
                   </a>
                   <a href="javascript:void(0)" style="color: red;text-decoration: none;">
-                    <font-awesome-icon icon="trash-alt" class="bg-red pointer"/> Удалить
+                    <font-awesome-icon :icon="['far','trash-alt']" class="bg-red pointer"/> Удалить
                   </a>
                 </p>
                 <input ref="fileUploadImage" type="file" id="file" style="display: none" @change="handleUploadImage">

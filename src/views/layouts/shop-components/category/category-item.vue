@@ -1,18 +1,11 @@
 <template>
   <router-link :to="category_data.categories.length>0 ? `/categories/${category_data.id}` : `/products/category/${category_data.id}`">
-    <v-flex ms-3 class="mr-4">
-      <v-card
-        class="mx-auto"
-        max-width="400"
-      >
-        <v-img
-          class="white--text align-end"
-          height="200px"
-          :src="category_data.image"
-        ></v-img>
-        <v-card-title>{{category_data.name}}</v-card-title>
-      </v-card>
-    </v-flex>
+    <div>
+      <div class="category-card__img">
+        <img :src="category_data.image" alt="img">
+      </div>
+      <div class="category-card__text">{{category_data.name}}</div>
+    </div>
   </router-link>
 </template>
 

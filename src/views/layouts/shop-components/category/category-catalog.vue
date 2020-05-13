@@ -1,13 +1,33 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <category-item
-        v-for="(category,index) in CATEGORY_DETAIL.categories"
-        :key="index"
-        :category_data="category"
-      />
+<!--  <div class="container">-->
+<!--    <div class="row">-->
+<!--      <category-item-->
+<!--        v-for="(category,index) in CATEGORY_DETAIL.categories"-->
+<!--        :key="index"-->
+<!--        :category_data="category"-->
+<!--      />-->
+<!--    </div>-->
+<!--  </div>-->
+  <section class="category">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="category-card">
+            <div class="category-card__item"
+                 v-for="(category,index) in CATEGORY_DETAIL.categories"
+                 :key="index"
+            >
+              <category-item
+                :key="index"
+                :category_data="category"
+              />
+            </div>
+            <router-view/>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -39,6 +59,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

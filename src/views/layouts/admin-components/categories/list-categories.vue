@@ -79,10 +79,10 @@
                  <v-expansion-panel-header>{{category.name}}
                    <div class = "buttons-group d-flex justify-content-end mr-4">
                      <router-link  class = "mr-2" :to="`/admin/categories/detail/${category.id}`">
-                       <font-awesome-icon icon="eye" class = "blue pointer"/>
+                       <font-awesome-icon :icon="['far','eye']" class = "blue pointer"/>
                      </router-link>
                      <a @click = "deleteCategory(category.id, CATEGORIES, index)">
-                       <font-awesome-icon icon="trash-alt" class = "red-icon-color pointer"/>
+                       <font-awesome-icon :icon="['far','trash-alt']" class = "red-icon-color pointer"/>
                      </a>
                    </div>
                  </v-expansion-panel-header>
@@ -95,10 +95,10 @@
                        <v-expansion-panel-header expand-icon="">{{subcategory.name}}
                         <div class="buttons d-flex justify-content-end mr-4">
                           <router-link  class = "mr-2" :to="`/admin/categories/detail/${subcategory.id}`">
-                            <font-awesome-icon icon="eye" class = "blue pointer"/>
+                            <font-awesome-icon :icon="['far','eye']" class = "blue pointer"/>
                           </router-link>
                           <a @click = "deleteCategory(subcategory.id, category.categories, index)">
-                            <font-awesome-icon icon="trash-alt" class = "red-icon-color pointer"/>
+                            <font-awesome-icon :icon="['far','trash-alt']" class = "red-icon-color pointer"/>
                           </a>
                         </div>
                        </v-expansion-panel-header>

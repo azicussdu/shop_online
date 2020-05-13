@@ -1,9 +1,15 @@
 <template>
   <section class="main">
-    <div class="d-flex mx-auto justify-content-center position-relative" style="max-width: 70vw">
-      <sidebar :nodes="CATEGORIES" class="sidebar-categories"></sidebar>
-      <app-content></app-content>
-      <div class="sidebar-wrapper"></div>
+    <div class="container pt-0">
+      <div class="row">
+        <div class="col-md-3">
+          <sidebar :nodes="CATEGORIES" class="sidebar-categories"></sidebar>
+          <div class="sidebar-wrapper"></div>
+        </div>
+        <div class="col-md-9">
+          <app-content></app-content>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -39,6 +45,7 @@
     display: none;
   }
   .main{
+    margin-top: 1em;
     margin-bottom: 80px;
   }
 </style>

@@ -6,17 +6,17 @@
       </div>
       <div class="content-bottom">
         <div class="bottom-item">
-          <font-awesome-icon icon="award" class="pointer fa-3x mx-3"/>
+          <font-awesome-icon :icon="['far','award']" class="pointer fa-3x mx-3"/>
           <span><b>Крупнейшая торговая<br> площадка Казахстана</b></span><span class="bottom-item__divider"></span></div>
         <div class="bottom-item">
-          <font-awesome-icon icon="shopping-cart" class="pointer fa-3x mx-3"/>
+          <font-awesome-icon :icon="['far','shopping-cart']" class="pointer fa-3x mx-3"/>
           <span><b>Можно купить все</b><br>10&nbsp;966&nbsp;353 товаров и услуг</span><span
           class="bottom-item__divider"></span></div>
         <div class="bottom-item">
-          <font-awesome-icon icon="dollar-sign" class="pointer fa-3x mx-3"/>
+          <font-awesome-icon :icon="['far','dollar-sign']" class="pointer fa-3x mx-3"/>
           <span><b>Лучшие цены</b><br>Найдите дешевле</span><span class="bottom-item__divider"></span></div>
         <div class="bottom-item">
-          <font-awesome-icon icon="thumbs-up" class="pointer fa-3x mx-3"/>
+          <font-awesome-icon :icon="['far','thumbs-up']" class="pointer fa-3x mx-3"/>
           <span><b>Проверенные продавцы</b><br>Рейтинг по отзывам</span></div>
       </div>
   </div>
@@ -27,7 +27,7 @@
     z-index: -1;
     position: relative;
     flex: 5;
-    max-width: 70vw;
+    max-width: 75vw;
   }
 
   .content-top {
@@ -37,10 +37,10 @@
 
   .content-bottom {
     display: flex;
-    justify-content: space-between;
-    margin: 10px;
+    justify-content: center;
+    margin-top:10px;
     border: 1px solid #ccc;
-    padding: 20px 25px;
+    padding: 5px 15px;
   }
 
   .content-right {
@@ -51,7 +51,6 @@
   }
 
   .content-left {
-    margin: 0 10px;
     flex: 2;
     background: url("~@/assets/images/bg-1.jpeg") no-repeat;
     background-size: cover;
@@ -68,6 +67,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: .8em;
   }
 </style>
 
