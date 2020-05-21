@@ -171,4 +171,30 @@ export default {
     padding: 1.5em 1em;
     text-align: justify;
   }
+  @media screen and (max-width: 576px){
+    .payment__title{
+      font-size: 23px;
+      line-height: 1;
+      margin-top: 15px;
+    }
+    .payment__heading{
+      padding: 0 19px 15px;
+    }
+    .information{
+      padding: 25.6px 20px 15px;
+    }
+      .information__text{
+        text-align: justify;
+      }
+    .content__item{
+      display: block;
+    }
+    .content__heading{
+      padding: 10px 0 5px;
+    }
+    .content__text{
+      padding:5px  0 10px;
+
+    }
+  }
 </style>

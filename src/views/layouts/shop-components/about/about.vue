@@ -5,10 +5,12 @@
             <div class="col-12">
               <app-breadcrumbs :items="items"></app-breadcrumbs>
             </div>
-              <div class="col-md-6">
-                <img src="../../../../assets/images/about-image.jpg" height="700" class = "w-100" alt="img">
+              <div class="col-lg-6">
+                <div class="about__img">
+                  <img src="../../../../assets/images/about-image.jpg" alt="img">
+                </div>
               </div>
-              <div class="col-md-6" style = "position:relative">
+              <div class="col-lg-6" style = "position:relative">
                 <div class="smartdos">
                   <div class="smartdos__header">
                       <h2 class="smartdos__subtitle">
@@ -184,12 +186,20 @@ export default {
   .about{
     margin-bottom: 3em;
   }
+  .about__img{
+  }
+  .about__img img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin:0 auto;
+  }
   .smartdos{
     position: absolute;
     top:50%;
     transform: translateY(-50%);
     left: -70px;
-    width: 595px;
+    max-width: 585px;
     height: 590px;
     padding: 65px 50px;
     background-color: #f5f5f5;
@@ -304,5 +314,44 @@ export default {
   @keyframes increase4 {
     0% {width:0;}
     100% {width:75%}
+  }
+  @media screen and (max-width: 992px){
+    .smartdos{
+      position: static;
+      transform: none;
+      width: 86%;
+      margin:0 auto;
+    }
+  }
+  @media screen and (max-width: 768px){
+    .smartdos{
+      padding: 30px 40px;
+      height: auto;
+      width: 100%;
+    }
+    .smartdos__subtitle{
+      font-size: 24px;
+    }
+    .smartdos__title{
+      font-size: 38px;
+    }
+    .smartdos__heading{
+      font-size: 13px;
+    }
+    .smartdos__text{
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .smartdos{
+      padding: 10px 20px;
+    }
+    .smartdos__title{
+      font-size: 30px;
+    }
+    .smartdos__subtitle{
+      font-size: 20px;
+    }
   }
 </style>

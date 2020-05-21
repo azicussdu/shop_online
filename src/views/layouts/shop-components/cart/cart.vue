@@ -81,7 +81,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="dialog = false">Отменить</v-btn>
-                          <v-btn color="blue darken-1" text @click="orderProducts">Отправить</v-btn>
+                          <v-btn color="blue darken-1" text type="submit" @click="orderProducts">Отправить</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
@@ -97,7 +97,7 @@
 
 <script>
 import appBreadcrumbs from '../breadcrumbs'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import cartItem from './cart-item'
 
 export default {
@@ -109,8 +109,9 @@ export default {
         zip_code: '',
         address: '',
         full_name: '',
+        note: 'none',
         telephone_number: '',
-        product: []
+        products: []
       },
       dialog: false,
       cities: [
@@ -151,6 +152,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'USER_ORDER'
+    ]),
     orderProducts () {
       this.dialog = false
       for (let i = 0; i < this.CART.length; i++) {
@@ -158,15 +162,15 @@ export default {
           id: this.CART[i].id,
           pieces: this.CART[i].quantity
         }
-        this.order.product.push(p)
+        this.order.products.push(p)
       }
-      this.ORDER(this.order)
+      console.log(this.order)
+      this.USER_ORDER(this.order)
     }
   },
   computed: {
     ...mapGetters([
-      'CART',
-      'ORDER'
+      'CART'
     ]),
     cartTotal () {
       if (this.CART.length) {
@@ -212,7 +216,7 @@ export default {
     border-radius:5px;
     padding:15px 24px;
     min-height: 180px;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,.2);
+    box-shadow: 0 0 9px 1px rgba(0,0,0,.12);
     margin-bottom:15px;
   }
   .products__content{
@@ -245,34 +249,16 @@ export default {
   .list-item:last-child{
     text-align: left;
   }
-  .list-item__img{
-    position:absolute;
-    left:20px;
-    top:0;
-  }
   .list-item__img img{
     max-width: 60px;
     height: auto;
   }
-  .list-item__text{
-    padding: 0 0 0 90px;
-    font-size: 11px;
-  }
-  .list-item__icon-1{
-    color:darkblue;
-    margin-right:10px;
-    cursor: pointer;
-  }
-  .list-item__icon-2{
-    color:orangered;
-    margin-right: 15px;
-    cursor: pointer;
-  }
+
   .sumaries{
     padding:15px 24px;
     border:1px solid rgba(0,0,0,.1);
     border-radius:5px;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,.3);
+    box-shadow: 0 0 18px 1px rgba(0,0,0,.1);
     min-height: 180px;
   }
   .sumaries__inner{
@@ -294,7 +280,7 @@ export default {
     padding:15px 24px;
     border:1px solid rgba(0,0,0,.1);
     border-radius:5px;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,.3);
+    box-shadow: 0 0 13px 1px rgba(0,0,0,.1);
     min-height: 180px;
     text-align: center;
     font-size: 15px;

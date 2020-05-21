@@ -64,7 +64,7 @@
             <div class="product-list">
               <div class="product-list__header">
                 <div class="product-list__icons">
-                  <span><font-awesome-icon :icon="['far','th']" class="product-list__icons--1 active" /></span>
+                  <span><font-awesome-icon icon="th" class="product-list__icons--1 active" /></span>
                 </div>
                 <div class="product-list__text">There Are {{CATEGORY_PRODUCTS.length}} Products</div>
                 <div class="sorting">

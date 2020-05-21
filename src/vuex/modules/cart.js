@@ -65,8 +65,8 @@ const actions = {
   DECREMENT ({commit}, id) {
     commit('DECREMENT', id)
   },
-  ORDER ({commit}, data) {
-    return axios.post(`api/order`, data)
+  USER_ORDER ({commit}, data) {
+    return axios.post(`api/userOrders`, data)
       .then((response) => {
         // eslint-disable-next-line no-undef
         toast.fire({

@@ -4,7 +4,7 @@
       <img :src="product_data.image" alt="img">
       <div class="product-item__buttons">
         <button class="product-item__button product-item__button--1">
-        <span @click="ADD_ITEM_TO_CART(product_data)"><font-awesome-icon :icon = "['fas','shopping-cart']"></font-awesome-icon></span>
+        <span @click="ADD_ITEM_TO_CART(product_data)"><font-awesome-icon icon = "shopping-cart"></font-awesome-icon></span>
       </button>
         <button class="product-item__button product-item__button--2">
           <span><font-awesome-icon :icon = "['far','eye']"></font-awesome-icon></span>

@@ -87,7 +87,7 @@
                 </div>
                 <p style="text-align: center">
                   <a href="javascript:void(0)" style="text-decoration: none;" data-name="single" @click.prevent="$refs.fileUploadImage.click()">
-                    <font-awesome-icon :icon="['far','edit']" class="blue pointer"/> Загрузить
+                    <font-awesome-icon icon="edit" class="blue pointer"/> Загрузить
                   </a>
                   <a href="javascript:void(0)" style="color: red;text-decoration: none;">
                     <font-awesome-icon :icon="['far','trash-alt']" class="bg-red pointer"/> Удалить
